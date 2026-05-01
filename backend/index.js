@@ -6,6 +6,9 @@ const dotenv = require("dotenv")
 const app = express()
 const Routes = require("./routes/route.js")
 
+const dns = require("dns");
+dns.setServers(["8.8.8.8", "1.1.1.1"]); 
+
 const PORT = process.env.PORT || 5001
 
 dotenv.config();
@@ -25,6 +28,10 @@ mongoose
     .catch((err) => console.log("NOT CONNECTED TO NETWORK", err))
 
 app.use('/', Routes);
+
+app.get("/", (req, res) => {
+  res.send("API is running 🚀");
+});
 
 app.listen(PORT, () => {
     console.log(`Server started at port no. ${PORT}`)
